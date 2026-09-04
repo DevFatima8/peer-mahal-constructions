@@ -20,6 +20,7 @@ const nextConfig: NextConfig = {
      * Cache-busting query (?v=…) allow karne ke liye `search` omit kiya gaya hai.
      */
     localPatterns: [
+      { pathname: "/content/**" },
       { pathname: "/images/**" },
       { pathname: "/img/**" },
       { pathname: "/photos/**" },
