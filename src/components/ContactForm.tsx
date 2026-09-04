@@ -14,7 +14,7 @@ import { services, site } from "@/lib/site";
  *  Sirf yeh ek line badalni hai — aur kuch nahi.
  *  Koi database, koi .env file, koi server setup ki zaroorat NAHI hai.
  * ──────────────────────────────────────────────────────────────────────────── */
-const FORMSPREE_FORM_ID = "YOUR_FORMSPREE_ID";
+const FORMSPREE_FORM_ID = "https://formspree.io/f/xaewzlyb";
 
 /* Poora endpoint (isko chhedne ki zaroorat nahi) */
 const FORMSPREE_ENDPOINT = `https://formspree.io/f/${FORMSPREE_FORM_ID}`;
@@ -119,7 +119,7 @@ export default function ContactForm() {
       setStatus("error");
       setMsg(
         data.errors?.map((x) => x.message).join(", ") ??
-          "Could not send your request. Please contact us on WhatsApp."
+        "Could not send your request. Please contact us on WhatsApp."
       );
     } catch {
       setStatus("error");
