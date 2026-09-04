@@ -14,6 +14,7 @@ import { services, site } from "@/lib/site";
  *  Sirf yeh ek line badalni hai — aur kuch nahi.
  *  Koi database, koi .env file, koi server setup ki zaroorat NAHI hai.
  * ──────────────────────────────────────────────────────────────────────────── */
+// FIX: Sirf form ki ID yahan aayegi, poora URL nahi.
 const FORMSPREE_FORM_ID = "xaewzlyb";
 
 /* Poora endpoint (isko chhedne ki zaroorat nahi) */
