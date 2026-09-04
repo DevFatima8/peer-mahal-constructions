@@ -7,7 +7,7 @@
 ## ⚡ Sirf 3 steps
 
 1. Apni tasveer ka **naam** neeche di gayi list ke mutabiq rakhein
-2. File ko **`public/images/`** folder mein rakh dein
+2. File ko **`public/content/`** (ya `public/images/`) folder mein rakh dein
 3. Rebuild karein: **`npm run build`**
 
 **Bas!** Tasveer khud website par lag jayegi. ✅
