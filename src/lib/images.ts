@@ -5,32 +5,18 @@ import path from "node:path";
  *  WEBSITE IMAGE LIBRARY  —  ویب سائٹ کی تصاویر
  * ============================================================================
  *
- *  Har tasveer ka ONLINE LINK neeche mojood hai, is liye website turant
- *  tasveeron ke sath chalti hai — kuch download karne ki zaroorat NAHI.
+ *  All project images are stored locally in:
+ *    public/content/
  *
- *  ── Tasveer badalni ho to DO tareeqe hain ──
- *
- *  1) ONLINE LINK badlein  (sab se aasan)
- *     Neeche IMAGE_LIBRARY mein us slot ka `url` badal dein.
- *     Koi bhi public image link chal jayega (Pexels, Unsplash, apni hosting…).
- *
- *  2) APNI FILE upload karein  (link se ziyada priority)
- *     Apni tasveer `public/images/` folder mein slot ke naam se rakh dein,
- *     misal `ceo.jpg`. Extension aur bade-chhote huroof se farq nahi parta.
- *     Local file mil jaye to woh online link ko OVERRIDE kar deti hai.
- *
- *  Live status dekhne ke liye website par `/image-guide` page kholein.
+ *  Resolution order:
+ *  1) Local file in public/content/ (highest priority)
+ *  2) Local file in public/images/
+ *  3) Configured default local path in IMAGE_LIBRARY
  * ========================================================================== */
 
-/** Pexels par kisi bhi size ki optimised image ka link banata hai. */
-function px(id: number, w: number, h: number, ext: "jpeg" | "png" = "jpeg") {
-  return `https://images.pexels.com/photos/${id}/pexels-photo-${id}.${ext}?auto=compress&cs=tinysrgb&fit=crop&w=${w}&h=${h}`;
-}
-
 export type LibraryEntry = {
-  /** Online image link — yahi by default website par lagta hai */
+  /** Local image URL (/content/filename.jpg) */
   url: string;
-  /** Photo credit (Pexels free licence — attribution zaroori nahi, sirf record ke liye) */
   credit: string;
   label: string;
   labelUrdu: string;
@@ -39,163 +25,387 @@ export type LibraryEntry = {
 };
 
 export const IMAGE_LIBRARY: Record<string, LibraryEntry> = {
-  /* ── LOGO ── koi online link nahi, sirf aapki apni file ── */
+  /* ── BRANDING ── */
   logo: {
-    url: "",
-    credit: "Aapka apna logo",
+    url: "/content/company-logo.jpeg",
+    credit: "Peer Mahal Construction Brand Logo",
     label: "Company logo (header)",
     labelUrdu: "کمپنی کا لوگو (ہیڈر)",
-    where: "Header — har page par sab se upar",
-    size: "600 × 180 (transparent PNG behtar)",
+    where: "Header — top of every page",
+    size: "600 × 180 (transparent PNG / JPEG)",
   },
   "logo-white": {
-    url: "",
-    credit: "Aapka apna logo",
-    label: "Company logo — white version (footer)",
+    url: "/content/company-logo.jpeg",
+    credit: "Peer Mahal Construction Brand Logo",
+    label: "Company logo — white/footer version",
     labelUrdu: "کمپنی کا سفید لوگو (فوٹر)",
-    where: "Footer — kaali background par",
-    size: "600 × 180 (safed / transparent PNG)",
+    where: "Footer — dark background",
+    size: "600 × 180 (transparent PNG / JPEG)",
   },
 
+  /* ── CORE BANNERS & SECTIONS ── */
   hero: {
-    url: px(9370034, 1920, 1080),
-    credit: "Yogendra Singh / Pexels",
+    url: "/content/hero-construction.jpg",
+    credit: "Local Content / Peer Mahal Construction",
+    label: "Home page main banner",
+    labelUrdu: "ہوم پیج کا مرکزی بینر",
+    where: "Home – top hero section",
+    size: "1920 × 1080 (landscape)",
+  },
+  "hero-construction": {
+    url: "/content/hero-construction.jpg",
+    credit: "Local Content / Peer Mahal Construction",
     label: "Home page main banner",
     labelUrdu: "ہوم پیج کا مرکزی بینر",
     where: "Home – top hero section",
     size: "1920 × 1080 (landscape)",
   },
   ceo: {
-    url: px(7580910, 800, 1000),
-    credit: "RDNE Stock project / Pexels",
+    url: "/content/ceo-portrait.jpeg",
+    credit: "Mohammed Imran Sohail (Founder & CEO)",
+    label: "CEO portrait (Mohammed Imran Sohail)",
+    labelUrdu: "سی ای او کی تصویر (محمد عمران سہیل)",
+    where: "About page – CEO message",
+    size: "800 × 1000 (portrait)",
+  },
+  "ceo-portrait": {
+    url: "/content/ceo-portrait.jpeg",
+    credit: "Mohammed Imran Sohail (Founder & CEO)",
     label: "CEO portrait (Mohammed Imran Sohail)",
     labelUrdu: "سی ای او کی تصویر (محمد عمران سہیل)",
     where: "About page – CEO message",
     size: "800 × 1000 (portrait)",
   },
   "about-team": {
-    url: px(8961133, 1200, 800),
-    credit: "Mikael Blomkvist / Pexels",
+    url: "/content/construction-team.jpg",
+    credit: "Local Content / Civil Engineering Team",
     label: "Team / company photo",
     labelUrdu: "ٹیم یا کمپنی کی تصویر",
     where: "Home + About pages",
     size: "1200 × 800",
   },
-  residential: {
-    url: px(8134820, 1200, 800),
-    credit: "Max Vakhtbovych / Pexels",
-    label: "Residential project",
-    labelUrdu: "رہائشی منصوبہ",
-    where: "Services, gallery, client categories",
-    size: "1200 × 800",
-  },
-  commercial: {
-    url: px(28654406, 1200, 800),
-    credit: "Jimmy Liao / Pexels",
-    label: "Commercial project / plaza",
-    labelUrdu: "تجارتی منصوبہ / پلازہ",
-    where: "Services, gallery, contact banner",
-    size: "1200 × 800",
-  },
-  industrial: {
-    url: px(36397980, 1200, 800),
-    credit: "Willians Huerta / Pexels",
-    label: "Industrial project / factory",
-    labelUrdu: "صنعتی منصوبہ / فیکٹری",
-    where: "Services, gallery, terms banner",
-    size: "1200 × 800",
-  },
-  infrastructure: {
-    url: px(37820986, 1200, 800),
-    credit: "Tom Shamberger / Pexels",
-    label: "Road / bridge / infrastructure",
-    labelUrdu: "سڑک / پل / بنیادی ڈھانچہ",
-    where: "Services, gallery",
-    size: "1200 × 800",
-  },
-  supervision: {
-    url: px(30379883, 1200, 800),
-    credit: "Mukhtar Shuaib Mukhtar / Pexels",
-    label: "Site supervision / survey",
-    labelUrdu: "سائٹ نگرانی / سروے",
-    where: "Services banner, gallery",
-    size: "1200 × 800",
-  },
-  drawings: {
-    url: px(5582585, 1200, 800),
-    credit: "Thirdman / Pexels",
-    label: "Drawings / blueprints",
-    labelUrdu: "نقشے / بلیو پرنٹ",
-    where: "Services, gallery, privacy banner",
+  "construction-team": {
+    url: "/content/construction-team.jpg",
+    credit: "Local Content / Civil Engineering Team",
+    label: "Team / company photo",
+    labelUrdu: "ٹیم یا کمپنی کی تصویر",
+    where: "Home + About pages",
     size: "1200 × 800",
   },
   "cta-bg": {
-    url: px(2217214, 1920, 1080),
-    credit: "Ariel Paredes / Pexels",
+    url: "/content/cta-construction-dark.jpg",
+    credit: "Local Content / Construction Architecture",
+    label: "Dark call-to-action background",
+    labelUrdu: "گہرے رنگ کا پس منظر",
+    where: "Bottom CTA band on every page",
+    size: "1920 × 1080 (dark)",
+  },
+  "cta-construction-dark": {
+    url: "/content/cta-construction-dark.jpg",
+    credit: "Local Content / Construction Architecture",
     label: "Dark call-to-action background",
     labelUrdu: "گہرے رنگ کا پس منظر",
     where: "Bottom CTA band on every page",
     size: "1920 × 1080 (dark)",
   },
 
-  /* ── Home page gallery (6 tasveerein) ── */
+  /* ── HOME PAGE GALLERY (6 UNIQUE PROJECTS) ── */
   "project-1": {
-    url: px(8134820, 900, 650),
-    credit: "Max Vakhtbovych / Pexels",
+    url: "/content/residential-villa.jpg",
+    credit: "Local Content / Residential Villa",
     label: "Gallery 1 — Residential villa",
     labelUrdu: "گیلری ۱ — رہائشی مکان",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "residential-villa": {
+    url: "/content/residential-villa.jpg",
+    credit: "Local Content / Residential Villa",
+    label: "Gallery 1 — Residential villa",
+    labelUrdu: "گیلری ۱ — رہائشی مکان",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
   },
   "project-2": {
-    url: px(1313534, 900, 650),
-    credit: "Mindaugas U / Pexels",
+    url: "/content/commercial-plaza.jpg",
+    credit: "Local Content / Commercial Plaza",
     label: "Gallery 2 — Commercial plaza",
     labelUrdu: "گیلری ۲ — تجارتی پلازہ",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "commercial-plaza": {
+    url: "/content/commercial-plaza.jpg",
+    credit: "Local Content / Commercial Plaza",
+    label: "Gallery 2 — Commercial plaza",
+    labelUrdu: "گیلری ۲ — تجارتی پلازہ",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
   },
   "project-3": {
-    url: px(236698, 900, 650),
-    credit: "Pixabay / Pexels",
+    url: "/content/industrial-warehouse.jpg",
+    credit: "Local Content / Industrial Warehouse",
     label: "Gallery 3 — Factory & warehouse",
     labelUrdu: "گیلری ۳ — فیکٹری و گودام",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "industrial-warehouse": {
+    url: "/content/industrial-warehouse.jpg",
+    credit: "Local Content / Industrial Warehouse",
+    label: "Gallery 3 — Factory & warehouse",
+    labelUrdu: "گیلری ۳ — فیکٹری و گودام",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
   },
   "project-4": {
-    url: px(12274279, 900, 650),
-    credit: "Robert So / Pexels",
+    url: "/content/road-bridge.jpg",
+    credit: "Local Content / Road & Bridge Works",
     label: "Gallery 4 — Road & bridge works",
     labelUrdu: "گیلری ۴ — سڑک و پل",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "road-bridge": {
+    url: "/content/road-bridge.jpg",
+    credit: "Local Content / Road & Bridge Works",
+    label: "Gallery 4 — Road & bridge works",
+    labelUrdu: "گیلری ۴ — سڑک و پل",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
   },
   "project-5": {
-    url: px(30379884, 900, 650),
-    credit: "Mukhtar Shuaib Mukhtar / Pexels",
+    url: "/content/site-inspection.jpg",
+    credit: "Local Content / Site Quality Inspection",
     label: "Gallery 5 — Site supervision",
     labelUrdu: "گیلری ۵ — سائٹ نگرانی",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "site-inspection": {
+    url: "/content/site-inspection.jpg",
+    credit: "Local Content / Site Quality Inspection",
+    label: "Gallery 5 — Site supervision",
+    labelUrdu: "گیلری ۵ — سائٹ نگرانی",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
   },
   "project-6": {
-    url: px(4792483, 900, 650),
-    credit: "Anete Lusina / Pexels",
+    url: "/content/architectural-blueprints.jpg",
+    credit: "Local Content / Architectural Blueprints",
     label: "Gallery 6 — Structural drawings",
     labelUrdu: "گیلری ۶ — ساختی نقشے",
     where: "Home – projects gallery",
-    size: "900 × 650",
+    size: "1200 × 800",
+  },
+  "architectural-blueprints": {
+    url: "/content/architectural-blueprints.jpg",
+    credit: "Local Content / Architectural Blueprints",
+    label: "Gallery 6 — Structural drawings",
+    labelUrdu: "گیلری ۶ — ساختی نقشے",
+    where: "Home – projects gallery",
+    size: "1200 × 800",
+  },
+
+  /* ── 10 DEDICATED SERVICES ── */
+  "civil-construction": {
+    url: "/content/civil-construction.jpg",
+    credit: "Local Content / Civil Works",
+    label: "Civil Construction",
+    labelUrdu: "سول کنسٹرکشن",
+    where: "Services Page — Service 01",
+    size: "1200 × 800",
+  },
+  "structural-design": {
+    url: "/content/structural-design.jpg",
+    credit: "Local Content / Structural Engineering Design",
+    label: "Structural Design",
+    labelUrdu: "ساختی ڈیزائن",
+    where: "Services Page — Service 02",
+    size: "1200 × 800",
+  },
+  "project-management": {
+    url: "/content/project-management.jpg",
+    credit: "Local Content / Construction Project Management",
+    label: "Project Management",
+    labelUrdu: "پروجیکٹ مینجمنٹ",
+    where: "Services Page — Service 03",
+    size: "1200 × 800",
+  },
+  "site-supervision": {
+    url: "/content/site-supervision.jpg",
+    credit: "Local Content / Daily Site Supervision",
+    label: "Site Supervision",
+    labelUrdu: "سائٹ سپروژن",
+    where: "Services Page — Service 04",
+    size: "1200 × 800",
+  },
+  "quantity-surveying": {
+    url: "/content/quantity-surveying.jpg",
+    credit: "Local Content / Quantity Surveying & Take-off",
+    label: "Quantity Surveying",
+    labelUrdu: "کوانٹٹی سروے",
+    where: "Services Page — Service 05",
+    size: "1200 × 800",
+  },
+  "boq-cost-estimation": {
+    url: "/content/boq-cost-estimation.jpg",
+    credit: "Local Content / BOQ & Estimation",
+    label: "BOQ & Cost Estimation",
+    labelUrdu: "بی او کیو اور لاگت کا تخمینہ",
+    where: "Services Page — Service 06",
+    size: "1200 × 800",
+  },
+  "building-renovation": {
+    url: "/content/building-renovation.jpg",
+    credit: "Local Content / Building Renovation",
+    label: "Building Renovation",
+    labelUrdu: "عمارت کی تزئین و آرائش",
+    where: "Services Page — Service 07",
+    size: "1200 × 800",
+  },
+  "infrastructure-roads": {
+    url: "/content/infrastructure-roads.jpg",
+    credit: "Local Content / Road & Infrastructure Works",
+    label: "Road & Infrastructure Works",
+    labelUrdu: "سڑکیں اور بنیادی ڈھانچہ",
+    where: "Services Page — Service 08",
+    size: "1200 × 800",
+  },
+  "structural-inspection": {
+    url: "/content/structural-inspection.jpg",
+    credit: "Local Content / Structural Inspection & Testing",
+    label: "Structural Inspection",
+    labelUrdu: "ساختی معائنہ",
+    where: "Services Page — Service 09",
+    size: "1200 × 800",
+  },
+  "engineering-drawings": {
+    url: "/content/engineering-drawings.jpg",
+    credit: "Local Content / 3D & Engineering Drawings",
+    label: "3D & Engineering Drawings",
+    labelUrdu: "تھری ڈی اور انجینئرنگ نقشے",
+    where: "Services Page — Service 10",
+    size: "1200 × 800",
+  },
+
+  /* ── 7 DEDICATED CLIENT CATEGORIES ── */
+  "residential-clients": {
+    url: "/content/residential-clients.jpg",
+    credit: "Local Content / Residential Architecture",
+    label: "Residential Clients",
+    labelUrdu: "رہائشی صارفین",
+    where: "Services Page — Category 01",
+    size: "1200 × 800",
+  },
+  "commercial-businesses": {
+    url: "/content/commercial-businesses.jpg",
+    credit: "Local Content / Commercial Property",
+    label: "Commercial Businesses",
+    labelUrdu: "تجارتی کاروبار",
+    where: "Services Page — Category 02",
+    size: "1200 × 800",
+  },
+  "industrial-clients": {
+    url: "/content/industrial-clients.jpg",
+    credit: "Local Content / Industrial Manufacturing",
+    label: "Industrial Clients",
+    labelUrdu: "صنعتی صارفین",
+    where: "Services Page — Category 03",
+    size: "1200 × 800",
+  },
+  "real-estate-development": {
+    url: "/content/real-estate-development.jpg",
+    credit: "Local Content / Real Estate Development",
+    label: "Real Estate Developers",
+    labelUrdu: "رئیل اسٹیٹ ڈویلپرز",
+    where: "Services Page — Category 04",
+    size: "1200 × 800",
+  },
+  "public-sector-infrastructure": {
+    url: "/content/public-sector-infrastructure.jpg",
+    credit: "Local Content / Public Infrastructure",
+    label: "Government & Public Sector",
+    labelUrdu: "حکومتی اور عوامی شعبہ",
+    where: "Services Page — Category 05",
+    size: "1200 × 800",
+  },
+  "contractor-collaboration": {
+    url: "/content/contractor-collaboration.jpg",
+    credit: "Local Content / Architect & Contractor Partnering",
+    label: "Architects & Contractors",
+    labelUrdu: "آرکیٹیکٹس اور ٹھیکیدار",
+    where: "Services Page — Category 06",
+    size: "1200 × 800",
+  },
+  "property-investment": {
+    url: "/content/property-investment.jpg",
+    credit: "Local Content / Property Investment",
+    label: "Property Owners / Investors",
+    labelUrdu: "جائیداد کے مالکان اور سرمایہ کار",
+    where: "Services Page — Category 07",
+    size: "1200 × 800",
+  },
+
+  /* ── LEGACY SLOTS (for backwards compatibility) ── */
+  residential: {
+    url: "/content/residential.jpg",
+    credit: "Local Content / Residential",
+    label: "Residential project (legacy)",
+    labelUrdu: "رہائشی منصوبہ",
+    where: "Legacy references",
+    size: "1200 × 800",
+  },
+  commercial: {
+    url: "/content/commercial.jpg",
+    credit: "Local Content / Commercial",
+    label: "Commercial project (legacy)",
+    labelUrdu: "تجارتی منصوبہ",
+    where: "Legacy references",
+    size: "1200 × 800",
+  },
+  industrial: {
+    url: "/content/industrial.jpg",
+    credit: "Local Content / Industrial",
+    label: "Industrial project (legacy)",
+    labelUrdu: "صنعتی منصوبہ",
+    where: "Legacy references",
+    size: "1200 × 800",
+  },
+  infrastructure: {
+    url: "/content/infrastructure.jpg",
+    credit: "Local Content / Infrastructure",
+    label: "Road / infrastructure (legacy)",
+    labelUrdu: "سڑک / بنیادی ڈھانچہ",
+    where: "Legacy references",
+    size: "1200 × 800",
+  },
+  supervision: {
+    url: "/content/supervision.jpg",
+    credit: "Local Content / Supervision",
+    label: "Site supervision (legacy)",
+    labelUrdu: "سائٹ نگرانی",
+    where: "Legacy references",
+    size: "1200 × 800",
+  },
+  drawings: {
+    url: "/content/drawings.jpg",
+    credit: "Local Content / Drawings",
+    label: "Drawings / blueprints (legacy)",
+    labelUrdu: "نقشے / بلیو پرنٹ",
+    where: "Legacy references",
+    size: "1200 × 800",
   },
 };
 
 /* ==========================================================================
- *  LOCAL OVERRIDE — apni file rakhein to woh online link ki jagah lag jayegi
+ *  LOCAL RESOLVER
  * ========================================================================== */
 
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 
 const SEARCH_DIRS = [
+  path.join(PUBLIC_DIR, "content"),
   path.join(PUBLIC_DIR, "images"),
   path.join(PUBLIC_DIR, "img"),
   path.join(PUBLIC_DIR, "photos"),
@@ -208,9 +418,9 @@ const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".gif", ".s
 /** Extra file names accepted for a slot. */
 const SLOT_ALIASES: Record<string, string[]> = {
   logo: [
+    "company-logo",
     "logo",
     "logo-dark",
-    "company-logo",
     "brand",
     "brand-logo",
     "peer-mahal-logo",
@@ -219,6 +429,7 @@ const SLOT_ALIASES: Record<string, string[]> = {
     "header-logo",
   ],
   "logo-white": [
+    "company-logo",
     "logo-white",
     "logo-light",
     "white-logo",
@@ -226,6 +437,7 @@ const SLOT_ALIASES: Record<string, string[]> = {
     "footer-logo",
   ],
   ceo: [
+    "ceo-portrait",
     "ceo",
     "ceo-image",
     "ceo-photo",
@@ -240,30 +452,60 @@ const SLOT_ALIASES: Record<string, string[]> = {
     "director",
     "md",
   ],
-  hero: ["hero", "hero-image", "banner", "main-banner", "home-banner", "slider-1"],
-  "about-team": ["about-team", "about", "team", "team-photo", "our-team", "staff"],
-  residential: ["residential", "house", "home", "housing"],
-  commercial: ["commercial", "plaza", "office", "shop"],
-  industrial: ["industrial", "factory", "warehouse", "industry"],
-  infrastructure: ["infrastructure", "road", "roads", "bridge", "infra"],
-  supervision: ["supervision", "site", "site-visit", "survey", "inspection"],
-  drawings: ["drawings", "drawing", "blueprint", "map", "naqsha", "design"],
-  "cta-bg": ["cta-bg", "cta", "cta-background", "footer-bg", "dark-bg"],
+  "ceo-portrait": ["ceo-portrait", "ceo", "owner", "imran", "mohammed-imran-sohail"],
+  hero: ["hero-construction", "hero", "hero-image", "banner", "main-banner", "home-banner", "slider-1"],
+  "hero-construction": ["hero-construction", "hero", "banner", "main-banner"],
+  "about-team": ["construction-team", "about-team", "about", "team", "team-photo", "our-team", "staff"],
+  "construction-team": ["construction-team", "about-team", "team", "our-team"],
+  residential: ["residential-villa", "residential-clients", "residential", "house", "home", "housing"],
+  "residential-villa": ["residential-villa", "project-1", "residential"],
+  commercial: ["commercial-plaza", "commercial-businesses", "commercial", "plaza", "office", "shop"],
+  "commercial-plaza": ["commercial-plaza", "project-2", "commercial"],
+  industrial: ["industrial-warehouse", "industrial-clients", "industrial", "factory", "warehouse", "industry"],
+  "industrial-warehouse": ["industrial-warehouse", "project-3", "industrial"],
+  infrastructure: ["road-bridge", "infrastructure-roads", "public-sector-infrastructure", "infrastructure", "road", "roads", "bridge", "infra"],
+  "road-bridge": ["road-bridge", "project-4", "infrastructure"],
+  supervision: ["site-inspection", "site-supervision", "supervision", "site", "site-visit", "survey", "inspection"],
+  "site-inspection": ["site-inspection", "project-5", "supervision"],
+  drawings: ["architectural-blueprints", "engineering-drawings", "structural-design", "drawings", "drawing", "blueprint", "map", "naqsha", "design"],
+  "architectural-blueprints": ["architectural-blueprints", "project-6", "drawings"],
+  "cta-bg": ["cta-construction-dark", "cta-bg", "cta", "cta-background", "footer-bg", "dark-bg"],
+  "cta-construction-dark": ["cta-construction-dark", "cta-bg", "cta"],
+  "project-1": ["residential-villa", "project-1", "project1", "1", "p1", "proj-1", "gallery-1", "gallery1"],
+  "project-2": ["commercial-plaza", "project-2", "project2", "2", "p2", "proj-2", "gallery-2", "gallery2"],
+  "project-3": ["industrial-warehouse", "project-3", "project3", "3", "p3", "proj-3", "gallery-3", "gallery3"],
+  "project-4": ["road-bridge", "project-4", "project4", "4", "p4", "proj-4", "gallery-4", "gallery4"],
+  "project-5": ["site-inspection", "project-5", "project5", "5", "p5", "proj-5", "gallery-5", "gallery5"],
+  "project-6": ["architectural-blueprints", "project-6", "project6", "6", "p6", "proj-6", "gallery-6", "gallery6"],
+  "civil-construction": ["civil-construction", "civil", "construction"],
+  "structural-design": ["structural-design", "structural", "design-3d"],
+  "project-management": ["project-management", "management", "pm"],
+  "site-supervision": ["site-supervision", "supervision", "site-insp"],
+  "quantity-surveying": ["quantity-surveying", "qs", "surveying"],
+  "boq-cost-estimation": ["boq-cost-estimation", "boq", "cost-estimation", "estimation"],
+  "building-renovation": ["building-renovation", "renovation", "remodeling"],
+  "infrastructure-roads": ["infrastructure-roads", "road-works", "infrastructure"],
+  "structural-inspection": ["structural-inspection", "inspection", "testing"],
+  "engineering-drawings": ["engineering-drawings", "drawings-3d", "3d-drawings"],
+  "residential-clients": ["residential-clients", "client-residential"],
+  "commercial-businesses": ["commercial-businesses", "client-commercial"],
+  "industrial-clients": ["industrial-clients", "client-industrial"],
+  "real-estate-development": ["real-estate-development", "client-realestate"],
+  "public-sector-infrastructure": ["public-sector-infrastructure", "client-public"],
+  "contractor-collaboration": ["contractor-collaboration", "client-contractor"],
+  "property-investment": ["property-investment", "client-investor"],
 };
 
 export type ResolvedImage = {
-  /** Final image URL — local file (agar mojood ho) warna online link */
+  /** Final image URL — local file */
   url: string;
-  /** Koi tasveer mili ya nahi */
   found: boolean;
-  /** Source: uploaded file ya online link */
-  source: "local" | "online" | "none";
+  source: "local" | "none";
   slot: string;
-  /** Local file ka naam (agar upload ki gayi ho) */
   fileName: string | null;
 };
 
-/** "/images/ceo.jpg" ya "ceo.png" ko slot "ceo" mein badalta hai. */
+/** Normalizes "/content/hero.jpg", "/images/ceo.jpg" or "ceo.png" into slot string. */
 export function toSlot(input: string): string {
   const base = input.split("?")[0].split("/").filter(Boolean).pop() ?? input;
   const ext = path.extname(base);
@@ -324,14 +566,12 @@ function findLocal(slot: string): { url: string; fileName: string } | null {
 }
 
 /**
- * Slot resolve karta hai:
- *   1. Pehle `public/images/` mein apni uploaded file dhoondta hai
- *   2. Na mile to IMAGE_LIBRARY ka online link deta hai
+ * Resolves an image slot to its local file path in public/content or public/images.
  */
 export function resolveImage(slotOrPath: string | string[]): ResolvedImage {
   const list = (Array.isArray(slotOrPath) ? slotOrPath : [slotOrPath]).map(toSlot);
 
-  // 1) uploaded file ko priority
+  // 1) Find local file on disk
   for (const slot of list) {
     const local = findLocal(slot);
     if (local) {
@@ -339,23 +579,23 @@ export function resolveImage(slotOrPath: string | string[]): ResolvedImage {
     }
   }
 
-  // 2) online link (khali url wale slots — jaise logo — skip ho jate hain)
+  // 2) Check default library entry
   for (const slot of list) {
     const entry = IMAGE_LIBRARY[slot];
     if (entry && entry.url) {
-      return { url: entry.url, found: true, source: "online", slot, fileName: null };
+      return { url: entry.url, found: true, source: "local", slot, fileName: path.basename(entry.url) };
     }
   }
 
   return { url: "", found: false, source: "none", slot: list[0] ?? "unknown", fileName: null };
 }
 
-/** CSS `background-image` ke liye. */
+/** CSS `background-image` helper. */
 export function resolveImageUrl(slotOrPath: string | string[]): string {
   return resolveImage(slotOrPath).url;
 }
 
-/** Saare slots — `/image-guide` page is list se banta hai. */
+/** All slots for administrative status guide. */
 export const IMAGE_SLOTS = Object.entries(IMAGE_LIBRARY).map(([slot, entry]) => ({
   slot,
   ...entry,
