@@ -25,6 +25,16 @@ export const metadata: Metadata = {
     "site supervision Toba Tek Singh",
     "Seval Engineer Company",
   ],
+  icons: {
+    icon: [
+      { url: "/content/company-logo.jpeg" },
+      { url: "/content/company-logo.jpeg", type: "image/jpeg" },
+    ],
+    shortcut: ["/content/company-logo.jpeg"],
+    apple: [
+      { url: "/content/company-logo.jpeg" },
+    ],
+  },
   openGraph: {
     title: "Peer Mahal Construction | Build Strong. Build Safe. Build Once.",
     description:
@@ -40,6 +50,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/content/company-logo.jpeg" type="image/jpeg" />
+        <link rel="shortcut icon" href="/content/company-logo.jpeg" type="image/jpeg" />
+        <link rel="apple-touch-icon" href="/content/company-logo.jpeg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
