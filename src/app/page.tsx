@@ -14,16 +14,15 @@ import {
 } from "@/lib/site";
 
 /**
- * Gallery slots. Drop "project-1.jpg" … "project-6.jpg" (any extension) into
- * public/images/ and they automatically replace the default photos below.
+ * Gallery slots with dedicated local images in public/content/
  */
 const gallery = [
-  { slot: ["project-1", "residential"], title: "Residential Villa", urdu: "رہائشی مکان", cat: "Housing" },
-  { slot: ["project-2", "commercial"], title: "Commercial Plaza", urdu: "تجارتی پلازہ", cat: "Commercial" },
-  { slot: ["project-3", "industrial"], title: "Factory & Warehouse", urdu: "فیکٹری و گودام", cat: "Industrial" },
-  { slot: ["project-4", "infrastructure"], title: "Road & Bridge Works", urdu: "سڑک و پل", cat: "Infrastructure" },
-  { slot: ["project-5", "supervision"], title: "Site Supervision", urdu: "سائٹ نگرانی", cat: "Engineering" },
-  { slot: ["project-6", "drawings"], title: "Structural Drawings", urdu: "ساختی نقشے", cat: "Design" },
+  { slot: ["residential-villa", "project-1"], title: "Residential Villa", urdu: "رہائشی مکان", cat: "Housing" },
+  { slot: ["commercial-plaza", "project-2"], title: "Commercial Plaza", urdu: "تجارتی پلازہ", cat: "Commercial" },
+  { slot: ["industrial-warehouse", "project-3"], title: "Factory & Warehouse", urdu: "فیکٹری و گودام", cat: "Industrial" },
+  { slot: ["road-bridge", "project-4"], title: "Road & Bridge Works", urdu: "سڑک و پل", cat: "Infrastructure" },
+  { slot: ["site-inspection", "project-5"], title: "Site Supervision", urdu: "سائٹ نگرانی", cat: "Engineering" },
+  { slot: ["architectural-blueprints", "project-6"], title: "Structural Drawings", urdu: "ساختی نقشے", cat: "Design" },
 ];
 
 export default function HomePage() {
@@ -32,7 +31,7 @@ export default function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-slate-950">
         <SiteImage
-          slot="hero"
+          slot={["hero-construction", "hero"]}
           alt="Peer Mahal Construction site with engineers and cranes"
           fill
           priority
