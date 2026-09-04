@@ -67,7 +67,7 @@ export const services: Service[] = [
       "واٹر پروفنگ، ڈی پی سی اور دیمک سے بچاؤ کا علاج",
       "مکمل دستاویزات کے ساتھ ٹرن کی حوالگی",
     ],
-    image: "/images/residential.jpg",
+    image: "/content/civil-construction.jpg",
   },
   {
     slug: "structural-design",
@@ -92,7 +92,7 @@ export const services: Service[] = [
       "مٹی کی رپورٹ کی بنیاد پر بنیادوں کا ڈیزائن",
       "ساختی تفصیلات اور بار بینڈنگ شیڈول",
     ],
-    image: "/images/drawings.jpg",
+    image: "/content/structural-design.jpg",
   },
   {
     slug: "project-management",
@@ -117,7 +117,7 @@ export const services: Service[] = [
       "سائٹ پر معیار اور حفاظتی اصولوں کی پابندی",
       "کنٹریکٹ انتظام اور تبدیلیوں کا کنٹرول",
     ],
-    image: "/images/about-team.jpg",
+    image: "/content/project-management.jpg",
   },
   {
     slug: "site-supervision",
@@ -142,7 +142,7 @@ export const services: Service[] = [
       "مزدوروں اور ٹھیکیداروں کی کارکردگی کی نگرانی",
       "روزانہ سائٹ ڈائری اور ہفتہ وار کلائنٹ بریفنگ",
     ],
-    image: "/images/supervision.jpg",
+    image: "/content/site-supervision.jpg",
   },
   {
     slug: "quantity-surveying",
@@ -167,7 +167,7 @@ export const services: Service[] = [
       "تبدیلی کے احکامات اور حتمی حساب کتاب",
       "ضیاع پر کنٹرول اور میٹریل کا حساب",
     ],
-    image: "/images/drawings.jpg",
+    image: "/content/quantity-surveying.jpg",
   },
   {
     slug: "boq-cost-estimation",
@@ -192,7 +192,7 @@ export const services: Service[] = [
       "کیش فلو کا اندازہ اور مرحلہ وار ادائیگی پلان",
       "ٹینڈر دستاویزات اور تقابلی گوشوارے",
     ],
-    image: "/images/drawings.jpg",
+    image: "/content/boq-cost-estimation.jpg",
   },
   {
     slug: "building-renovation",
@@ -217,7 +217,7 @@ export const services: Service[] = [
       "بجلی اور پلمبنگ کی تجدید",
       "اندرونی فنشنگ، فالس سیلنگ اور رنگ و روغن",
     ],
-    image: "/images/residential.jpg",
+    image: "/content/building-renovation.jpg",
   },
   {
     slug: "road-infrastructure",
@@ -242,7 +242,7 @@ export const services: Service[] = [
       "پلیاں، ریٹیننگ وال اور چھوٹے پل",
       "پانی کی سپلائی لائنیں، ٹیوب ویل اور اوور ہیڈ ٹینک",
     ],
-    image: "/images/infrastructure.jpg",
+    image: "/content/infrastructure-roads.jpg",
   },
   {
     slug: "structural-inspection",
@@ -267,7 +267,7 @@ export const services: Service[] = [
       "سیلن، رساؤ اور زنگ کی تحقیق",
       "مرمت کی تجاویز کے ساتھ تحریری معائنہ رپورٹ",
     ],
-    image: "/images/supervision.jpg",
+    image: "/content/structural-inspection.jpg",
   },
   {
     slug: "engineering-drawings",
@@ -292,7 +292,7 @@ export const services: Service[] = [
       "تھری ڈی بیرونی ایلیویشن اور اندرونی منظر کشی",
       "ٹی ایم اے / ترقیاتی اداروں کے لیے منظوری کے نقشے",
     ],
-    image: "/images/drawings.jpg",
+    image: "/content/engineering-drawings.jpg",
   },
 ];
 
@@ -324,7 +324,7 @@ export const clientSegments: ClientSegment[] = [
       "ساختی ڈیزائن",
       "تعمیراتی کام کی نگرانی",
     ],
-    image: "/images/residential.jpg",
+    image: "/content/residential-clients.jpg",
   },
   {
     number: "02",
@@ -344,7 +344,7 @@ export const clientSegments: ClientSegment[] = [
       "ہوٹلز اور ریسٹورنٹس",
       "تجارتی عمارتیں",
     ],
-    image: "/images/commercial.jpg",
+    image: "/content/commercial-businesses.jpg",
   },
   {
     number: "03",
@@ -364,7 +364,7 @@ export const clientSegments: ClientSegment[] = [
       "صنعتی فرش",
       "تعمیراتی سائٹ کی ترقی",
     ],
-    image: "/images/industrial.jpg",
+    image: "/content/industrial-clients.jpg",
   },
   {
     number: "04",
@@ -384,7 +384,7 @@ export const clientSegments: ClientSegment[] = [
       "بنیادی ڈھانچے کی ترقی",
       "سڑکیں اور نکاسیٔ آب کے نظام",
     ],
-    image: "/images/commercial.jpg",
+    image: "/content/real-estate-development.jpg",
   },
   {
     number: "05",
@@ -404,7 +404,7 @@ export const clientSegments: ClientSegment[] = [
       "عوامی عمارتیں",
       "پانی کی فراہمی اور نکاسیٔ آب کے منصوبے",
     ],
-    image: "/images/infrastructure.jpg",
+    image: "/content/public-sector-infrastructure.jpg",
   },
   {
     number: "06",
@@ -424,7 +424,7 @@ export const clientSegments: ClientSegment[] = [
       "لاگت کا تخمینہ",
       "تعمیراتی سائٹ کی نگرانی",
     ],
-    image: "/images/drawings.jpg",
+    image: "/content/contractor-collaboration.jpg",
   },
   {
     number: "07",
@@ -444,7 +444,7 @@ export const clientSegments: ClientSegment[] = [
       "تزئین و آرائش کے لیے مشورہ",
       "جائیداد کی موجودہ حالت کا جائزہ",
     ],
-    image: "/images/residential.jpg",
+    image: "/content/property-investment.jpg",
   },
 ];
 
